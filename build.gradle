@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+	id 'org.jetbrains.kotlin.jvm'
 }
 
 repositories {
@@ -14,6 +15,8 @@ def runeLiteVersion = 'latest.release'
 
 dependencies {
 	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+	compileOnly group: 'org.xerial', name:'sqlite-jdbc', version: '3.45.3.0'
+	compileOnly group: 'io.github.oshai', name:'kotlin-logging-jvm', version: '5.1.0'
 
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
@@ -21,12 +24,25 @@ dependencies {
 	testImplementation 'junit:junit:4.12'
 	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
 	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
+	testImplementation group: 'org.xerial', name:'sqlite-jdbc', version: '3.45.3.0'
+	testImplementation group: 'io.github.oshai', name:'kotlin-logging-jvm', version: '5.1.0'
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
-group = 'com.example'
+group = 'com.jiig'
 version = '1.0-SNAPSHOT'
 
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 	options.release.set(11)
+}
+compileKotlin {
+	kotlinOptions {
+		jvmTarget = "17"
+	}
+}
+compileTestKotlin {
+	kotlinOptions {
+		jvmTarget = "17"
+	}
 }
